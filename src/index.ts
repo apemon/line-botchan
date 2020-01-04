@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import { lineMiddleware } from './line'
 import { webhookHandler } from './webhook'
 import { errorHandler } from './middleware/error-handler'
+import LeaveService from './service/leave-service'
 
 const {PORT = 8000} = process.env
 
@@ -20,6 +21,14 @@ function main() {
   
   app.get('/', (_req: Request, res: Response) => {
     res.send({status: 'OK'})
+  })
+
+  app.get('/leave', async (_req: Request, res: Response) => {
+    const service = new LeaveService()
+    console.log('hey')
+    await service.authorize()
+    await service.getCalendar()
+    res.send({status:'ok'})
   })
 
   // Handle error responses here.

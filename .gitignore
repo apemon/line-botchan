@@ -218,3 +218,4 @@ dist
 build
 
 .env
+*credential*.json
