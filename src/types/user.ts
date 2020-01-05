@@ -1,7 +1,8 @@
 export interface LineUser {
     name:string,
     nickname:string,
-    line_user_id:string,
+    line_user_id?:string,
+    holiday_availables?: UserHolidayAvailables
 }
 
 export interface UserHolidayAvailables {

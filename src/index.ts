@@ -6,11 +6,30 @@ import { lineMiddleware } from './line'
 import { webhookHandler } from './webhook'
 import { errorHandler } from './middleware/error-handler'
 import LeaveService from './service/leave-service'
+import admin from 'firebase-admin'
+import UserService from './service/user-service'
+import { LineUser } from './types/user'
+
+const serviceAccount = require('../google-credentials.json')
+
+
 
 const {PORT = 8000} = process.env
 
 function main() {
+  // initialize firebase
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  })
+  const db = admin.firestore()
+  const userService = new UserService(db)
+  userService.initialize()
+
+  // initialize express
   const app = express()
+
+  // set global variable
+  app.set('userService', userService)
 
   // Setup LINE webhook endpoint.
   app.post('/webhook', lineMiddleware, webhookHandler)
