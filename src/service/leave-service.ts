@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import {google, calendar_v3} from 'googleapis'
+import {google} from 'googleapis'
 
 const {GOOGLE_CALENDAR_ID} = process.env
 
